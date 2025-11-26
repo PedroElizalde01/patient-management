@@ -6,7 +6,6 @@ interface StyledButtonProps {
 }
 
 export const StyledButton = styled.button<StyledButtonProps>`
-  /* Base styles */
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -62,7 +61,6 @@ export const StyledButton = styled.button<StyledButtonProps>`
         transform: translateY(-1px);
         box-shadow: 0 4px 8px rgba(108, 117, 125, 0.3);
       }
-
       &:active:not(:disabled) {
         background-color: #5a6268;
         border-color: #5a6268;
@@ -70,7 +68,6 @@ export const StyledButton = styled.button<StyledButtonProps>`
         transform: translateY(0);
         box-shadow: 0 2px 4px rgba(108, 117, 125, 0.2);
       }
-
       &:focus-visible {
         box-shadow: 0 0 0 3px rgba(108, 117, 125, 0.4);
       }
