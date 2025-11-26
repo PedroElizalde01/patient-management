@@ -1,2 +1,4 @@
 export { Button } from './Button/Button';
-export { Card } from './Card/Card';
+export { PatientCard } from './PatientCard/PatientCard';
+export { PatientsGrid } from './PatientsGrid/PatientsGrid';
+export { Searchbar } from './Searchbar/Searchbar';
