@@ -1,25 +1,61 @@
 import { useState, useMemo } from 'react';
 import './App.css';
 import { PatientCard, PatientsGrid, Searchbar } from './components';
-import { mockPatients } from './data/mockPatients';
 import { type Patient } from './types';
 import { useDebounce } from './hooks/useDebounce';
+import { usePatients } from './hooks/usePatients';
 
 function App() {
   const [searchQuery, setSearchQuery] = useState('');
+  const { patients, loading, error, refetch } = usePatients();
   
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
   const filteredPatients = useMemo(() => {
     if (!debouncedSearchQuery.trim()) {
-      return mockPatients;
+      return patients;
     }
 
     const query = debouncedSearchQuery.toLowerCase();
-    return mockPatients.filter((patient: Patient) =>
+    return patients.filter((patient: Patient) =>
       patient.name.toLowerCase().includes(query)
     );
-  }, [debouncedSearchQuery]);
+  }, [debouncedSearchQuery, patients]);
+
+  if (loading) {
+    return (
+      <div className="app-container">
+        <div className="app-header-section">
+          <header className="app-header">
+            <h1>Patient Management System</h1>
+          </header>
+        </div>
+        <main className="app-main">
+          <div className="no-results">
+            <p>Loading patients...</p>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="app-container">
+        <div className="app-header-section">
+          <header className="app-header">
+            <h1>Patient Management System</h1>
+          </header>
+        </div>
+        <main className="app-main">
+          <div className="no-results">
+            <p>Error loading patients: {error.message}</p>
+            <button onClick={refetch}>Retry</button>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="app-container">

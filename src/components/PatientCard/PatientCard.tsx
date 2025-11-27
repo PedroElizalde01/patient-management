@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyledPatientCard } from './PatientCard.styles';
 import type { Patient } from '../../data/mockPatients';
+import { Avatar } from '../index';
 
 interface PatientCardProps {
   shadow?: boolean;
@@ -15,7 +16,7 @@ export const PatientCard: React.FC<PatientCardProps> = ({
 }) => {
   return (
     <StyledPatientCard $shadow={shadow} $padding={padding}>
-      <img src={patient.avatar} alt={patient.name} />
+      <Avatar src={patient.avatar} name={patient.name} />
       <p>{patient.name}</p>
     </StyledPatientCard>
   );
