@@ -53,7 +53,7 @@ export const PatientFormFields: React.FC<PatientFormFieldsProps> = ({
       </FormGroup>
 
       <FormGroup>
-        <Label>Avatar *</Label>
+        <Label>Avatar</Label>
 
         {errors.avatar && (
           <span style={{ color: '#e74c3c', fontSize: '12px' }}>
@@ -75,7 +75,7 @@ export const PatientFormFields: React.FC<PatientFormFieldsProps> = ({
       </FormGroup>
 
       <FormGroup>
-        <Label>Website *</Label>
+        <Label>Website</Label>
         <Input
           type="text"
           {...register('website')}

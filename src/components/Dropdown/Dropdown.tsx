@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { MdSort, MdKeyboardArrowDown } from 'react-icons/md';
 import {
   DropdownContainer,
   DropdownButton,
@@ -21,35 +22,6 @@ interface DropdownProps {
   placeholder?: string;
   disabled?: boolean;
 }
-
-const ChevronDownSVG: React.FC<{ isOpen: boolean }> = ({ isOpen }) => (
-  <ChevronIcon
-    $isOpen={isOpen}
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    strokeWidth={2}
-  >
-    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-  </ChevronIcon>
-);
-
-const SortIconSVG: React.FC = () => (
-  <SortIcon
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    strokeWidth={2}
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4"
-    />
-  </SortIcon>
-);
 
 export const Dropdown: React.FC<DropdownProps> = ({
   options,
@@ -119,9 +91,9 @@ export const Dropdown: React.FC<DropdownProps> = ({
         aria-expanded={isOpen}
         type="button"
       >
-        <SortIconSVG />
+        <SortIcon as={MdSort} />
         <DropdownLabel>{displayLabel}</DropdownLabel>
-        <ChevronDownSVG isOpen={isOpen} />
+        <ChevronIcon as={MdKeyboardArrowDown} $isOpen={isOpen} />
       </DropdownButton>
 
       <DropdownMenu $isOpen={isOpen} role="listbox">

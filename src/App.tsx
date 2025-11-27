@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { MdAdd } from 'react-icons/md';
 import './App.css';
 import { ToastContainer, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -88,12 +89,12 @@ function App() {
             Start by adding your first patient to the system
           </p>
           <Button
-            style={{ marginRight: '12px' }}
+            style={{ marginRight: '12px', gap: '8px' }}
             variant="primary"
             onClick={() => setIsAddModalOpen(true)}
             className="add-patient-btn"
           >
-            <span className="btn-icon">+</span>
+            <MdAdd size={20} />
             <span className="btn-text">Add Patient</span>
           </Button>
         </div>
