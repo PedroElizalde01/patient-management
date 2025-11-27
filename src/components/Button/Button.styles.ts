@@ -30,7 +30,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
       border-color: #2dd397;
 
       &:hover:not(:disabled) {
-        background-color: #4cc096;
+        background-color: #49ac87;
         border-color: #4cc096;
         transform: translateY(-1px);
         box-shadow: 0 4px 8px rgba(6, 30, 20, 0.3);

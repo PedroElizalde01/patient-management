@@ -11,6 +11,7 @@ import {
   ErrorState,
   EmptyState,
   AppLayout,
+  Button,
 } from './components';
 import { type Patient } from './types';
 import { useDebounce } from './hooks/useDebounce';
@@ -62,6 +63,8 @@ function App() {
   const showEmptyState =
     filteredAndSortedPatients.length === 0 && debouncedSearchQuery;
 
+  const showNoPatients = patients.length === 0 && !debouncedSearchQuery;
+
   return (
     <AppLayout
       toolbar={
@@ -76,17 +79,35 @@ function App() {
         />
       }
     >
-      <PatientsGrid>
-        {filteredAndSortedPatients.map((patient: Patient) => (
-          <PatientCard
-            key={patient.id}
-            patient={patient}
-            shadow
-            onDelete={deletePatient}
-            onUpdate={updatePatient}
-          />
-        ))}
-      </PatientsGrid>
+      {showNoPatients ? (
+        <div className="no-patients-state">
+          <p className="no-patients-title">No patients yet</p>
+          <p className="no-patients-subtitle">
+            Start by adding your first patient to the system
+          </p>
+          <Button
+            style={{ marginRight: '12px' }}
+            variant="primary"
+            onClick={() => setIsAddModalOpen(true)}
+            className="add-patient-btn"
+          >
+            <span className="btn-icon">+</span>
+            <span className="btn-text">Add Patient</span>
+          </Button>
+        </div>
+      ) : (
+        <PatientsGrid>
+          {filteredAndSortedPatients.map((patient: Patient) => (
+            <PatientCard
+              key={patient.id}
+              patient={patient}
+              shadow
+              onDelete={deletePatient}
+              onUpdate={updatePatient}
+            />
+          ))}
+        </PatientsGrid>
+      )}
 
       {showEmptyState && <EmptyState searchQuery={debouncedSearchQuery} />}
 
