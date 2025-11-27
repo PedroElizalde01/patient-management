@@ -6,6 +6,7 @@ interface UsePatientsReturn {
   patients: Patient[];
   loading: boolean;
   error: Error | null;
+  addPatient: (patientData: Omit<Patient, 'id' | 'createdAt'>) => void;
   updatePatient: (id: string, updatedData: Partial<Patient>) => void;
   deletePatient: (id: string) => void;
   refetch: () => Promise<void>;
@@ -23,7 +24,9 @@ export function usePatients(): UsePatientsReturn {
       const data = await getPatients();
       setPatients(data);
     } catch (err) {
-      setError(err instanceof Error ? err : new Error('Failed to fetch patients'));
+      setError(
+        err instanceof Error ? err : new Error('Failed to fetch patients')
+      );
     } finally {
       setLoading(false);
     }
@@ -32,6 +35,15 @@ export function usePatients(): UsePatientsReturn {
   useEffect(() => {
     fetchPatients();
   }, []);
+
+  const addPatient = (patientData: Omit<Patient, 'id' | 'createdAt'>) => {
+    const newPatient: Patient = {
+      ...patientData,
+      id: Date.now().toString(),
+      createdAt: new Date().toISOString(),
+    };
+    setPatients((prevPatients) => [newPatient, ...prevPatients]);
+  };
 
   const updatePatient = (id: string, updatedData: Partial<Patient>) => {
     setPatients((prevPatients) =>
@@ -55,9 +67,9 @@ export function usePatients(): UsePatientsReturn {
     patients,
     loading,
     error,
+    addPatient,
     updatePatient,
     deletePatient,
     refetch,
   };
 }
-

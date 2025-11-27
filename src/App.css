@@ -30,6 +30,12 @@
   padding: 0 2rem;
 }
 
+.searchbar-container {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
 .app-main {
   max-width: 1400px;
   width: 100%;

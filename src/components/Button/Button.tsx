@@ -1,9 +1,10 @@
 import React, { type ReactNode } from 'react';
 import { StyledButton } from './Button.styles';
 
-interface ButtonProps {
+interface ButtonProps
+  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'type'> {
   children: ReactNode;
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | 'delete';
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
@@ -30,4 +31,3 @@ export const Button: React.FC<ButtonProps> = ({
     </StyledButton>
   );
 };
-
