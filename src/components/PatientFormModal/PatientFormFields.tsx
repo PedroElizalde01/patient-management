@@ -62,7 +62,6 @@ export const PatientFormFields: React.FC<PatientFormFieldsProps> = ({
         )}
         <AvatarPreview>
           <Avatar
-            style={{ minWidth: '100px', minHeight: '100px' }}
             src={debouncedAvatarValue}
             name={isEditMode && patient ? patient.name : nameValue || 'NA'}
           />

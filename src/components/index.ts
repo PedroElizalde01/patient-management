@@ -6,3 +6,5 @@ export { Avatar } from './Avatar/Avatar';
 export { Modal } from './Modal/Modal';
 export { PatientFormModal } from './PatientFormModal/PatientFormModal';
 export { ConfirmationModal } from './ConfirmationModal/ConfirmationModal';
+export { Dropdown } from './Dropdown/Dropdown';
+export type { DropdownOption } from './Dropdown/Dropdown';
