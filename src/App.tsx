@@ -7,7 +7,8 @@ import { usePatients } from './hooks/usePatients';
 
 function App() {
   const [searchQuery, setSearchQuery] = useState('');
-  const { patients, loading, error, refetch, deletePatient } = usePatients();
+  const { patients, loading, error, refetch, deletePatient, updatePatient } =
+    usePatients();
 
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
@@ -82,6 +83,7 @@ function App() {
               patient={patient}
               shadow
               onDelete={deletePatient}
+              onUpdate={updatePatient}
             />
           ))}
         </PatientsGrid>

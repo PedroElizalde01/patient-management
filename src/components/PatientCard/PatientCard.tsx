@@ -20,6 +20,7 @@ interface PatientCardProps {
   padding?: string;
   patient: Patient;
   onDelete?: (id: string) => void;
+  onUpdate?: (id: string, updatedData: Partial<Patient>) => void;
 }
 
 export const PatientCard: React.FC<PatientCardProps> = ({
@@ -27,6 +28,7 @@ export const PatientCard: React.FC<PatientCardProps> = ({
   padding = '16px',
   patient,
   onDelete,
+  onUpdate,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -51,7 +53,13 @@ export const PatientCard: React.FC<PatientCardProps> = ({
         </ExpandButton>
       </CardHeader>
 
-      {isExpanded && <PatientContent patient={patient} onDelete={onDelete} />}
+      {isExpanded && (
+        <PatientContent
+          patient={patient}
+          onDelete={onDelete}
+          onUpdate={onUpdate}
+        />
+      )}
     </StyledPatientCard>
   );
 };
