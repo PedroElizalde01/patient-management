@@ -19,12 +19,14 @@ interface PatientCardProps {
   shadow?: boolean;
   padding?: string;
   patient: Patient;
+  onDelete?: (id: string) => void;
 }
 
 export const PatientCard: React.FC<PatientCardProps> = ({
   shadow = false,
   padding = '16px',
   patient,
+  onDelete,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -49,7 +51,7 @@ export const PatientCard: React.FC<PatientCardProps> = ({
         </ExpandButton>
       </CardHeader>
 
-      {isExpanded && <PatientContent patient={patient} />}
+      {isExpanded && <PatientContent patient={patient} onDelete={onDelete} />}
     </StyledPatientCard>
   );
 };

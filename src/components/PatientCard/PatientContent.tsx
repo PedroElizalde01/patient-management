@@ -12,7 +12,13 @@ import {
 import type { Patient } from '../../data/mockPatients';
 import { Button } from '../Button/Button';
 
-export const PatientContent = ({ patient }: { patient: Patient }) => {
+export const PatientContent = ({
+  patient,
+  onDelete,
+}: {
+  patient: Patient;
+  onDelete?: (id: string) => void;
+}) => {
   const fullDate = new Date(patient.createdAt).toLocaleDateString('en-US', {
     weekday: 'long',
     year: 'numeric',
@@ -53,7 +59,11 @@ export const PatientContent = ({ patient }: { patient: Patient }) => {
           <MdEdit size={20} />
           Edit
         </Button>
-        <Button variant="delete" style={{ flex: 1, gap: '8px' }}>
+        <Button
+          variant="delete"
+          style={{ flex: 1, gap: '8px' }}
+          onClick={() => onDelete?.(patient.id)}
+        >
           <MdDelete size={20} />
           Delete
         </Button>

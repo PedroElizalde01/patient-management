@@ -7,8 +7,8 @@ import { usePatients } from './hooks/usePatients';
 
 function App() {
   const [searchQuery, setSearchQuery] = useState('');
-  const { patients, loading, error, refetch } = usePatients();
-  
+  const { patients, loading, error, refetch, deletePatient } = usePatients();
+
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
   const filteredPatients = useMemo(() => {
@@ -77,7 +77,12 @@ function App() {
       <main className="app-main">
         <PatientsGrid>
           {filteredPatients.map((patient: Patient) => (
-            <PatientCard key={patient.id} patient={patient} shadow />
+            <PatientCard
+              key={patient.id}
+              patient={patient}
+              shadow
+              onDelete={deletePatient}
+            />
           ))}
         </PatientsGrid>
 
@@ -92,4 +97,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
