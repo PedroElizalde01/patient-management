@@ -1,0 +1,14 @@
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  color: #666;
+  gap: 0.5rem;
+}
+
+.empty-state-subtitle {
+  font-size: 0.9rem;
+  color: #999;
+}
