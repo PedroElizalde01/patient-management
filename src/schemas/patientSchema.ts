@@ -1,11 +1,8 @@
 import { z } from 'zod';
 
-export const patientEditSchema = z.object({
+export const patientFormSchema = z.object({
   name: z.string().min(1, 'Name is required').trim(),
-  avatar: z
-    .string()
-    .min(1, 'Avatar URL is required')
-    .url('Please enter a valid URL'),
+  avatar: z.string().min(1, 'Avatar is required').trim(),
   website: z
     .string()
     .min(1, 'Website URL is required')
@@ -13,4 +10,7 @@ export const patientEditSchema = z.object({
   description: z.string().min(1, 'Description is required'),
 });
 
-export type PatientEditFormData = z.infer<typeof patientEditSchema>;
+export type PatientFormData = z.infer<typeof patientFormSchema>;
+
+export const patientEditSchema = patientFormSchema;
+export type PatientEditFormData = PatientFormData;

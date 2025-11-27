@@ -1,14 +1,28 @@
 import { useState, useMemo } from 'react';
 import './App.css';
-import { PatientCard, PatientsGrid, Searchbar } from './components';
+import {
+  PatientCard,
+  PatientsGrid,
+  Searchbar,
+  Button,
+  PatientFormModal,
+} from './components';
 import { type Patient } from './types';
 import { useDebounce } from './hooks/useDebounce';
 import { usePatients } from './hooks/usePatients';
 
 function App() {
   const [searchQuery, setSearchQuery] = useState('');
-  const { patients, loading, error, refetch, deletePatient, updatePatient } =
-    usePatients();
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const {
+    patients,
+    loading,
+    error,
+    refetch,
+    deletePatient,
+    updatePatient,
+    addPatient,
+  } = usePatients();
 
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
@@ -66,12 +80,21 @@ function App() {
         </header>
 
         <div className="app-searchbar">
-          <Searchbar
-            value={searchQuery}
-            onChange={setSearchQuery}
-            showResults={debouncedSearchQuery.length > 0}
-            resultsCount={filteredPatients.length}
-          />
+          <div className="searchbar-container">
+            <Searchbar
+              value={searchQuery}
+              onChange={setSearchQuery}
+              showResults={debouncedSearchQuery.length > 0}
+              resultsCount={filteredPatients.length}
+            />
+            <Button
+              variant="primary"
+              onClick={() => setIsAddModalOpen(true)}
+              style={{ whiteSpace: 'nowrap' }}
+            >
+              + Add Patient
+            </Button>
+          </div>
         </div>
       </div>
 
@@ -95,6 +118,13 @@ function App() {
           </div>
         )}
       </main>
+
+      <PatientFormModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        onCreate={addPatient}
+        onSave={updatePatient}
+      />
     </div>
   );
 }

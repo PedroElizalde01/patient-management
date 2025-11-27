@@ -13,7 +13,7 @@ import {
 } from './PatientContent.styles';
 import type { Patient } from '../../data/mockPatients';
 import { Button } from '../Button/Button';
-import { EditPatientModal } from '../EditPatientModal/EditPatientModal';
+import { PatientFormModal } from '../PatientFormModal/PatientFormModal';
 
 export const PatientContent = ({
   patient,
@@ -79,7 +79,7 @@ export const PatientContent = ({
       </ButtonContainer>
 
       {onUpdate && (
-        <EditPatientModal
+        <PatientFormModal
           isOpen={isEditModalOpen}
           onClose={() => setIsEditModalOpen(false)}
           patient={patient}
