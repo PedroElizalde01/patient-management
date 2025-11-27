@@ -1,12 +1,7 @@
 import React from 'react';
+import { Modal } from '../Modal/Modal';
 import { Button } from '../Button/Button';
-import {
-  ConfirmOverlay,
-  ConfirmContent,
-  ConfirmTitle,
-  ConfirmMessage,
-  ConfirmButtons,
-} from './ConfirmationModal.styles';
+import { ConfirmMessage, ConfirmButtons } from './ConfirmationModal.styles';
 
 interface ConfirmationModalProps {
   isOpen: boolean;
@@ -29,26 +24,18 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   cancelText = 'Cancel',
   confirmVariant = 'primary',
 }) => {
-  if (!isOpen) return null;
+  const footer = (
+    <ConfirmButtons>
+      <Button onClick={onCancel}>{cancelText}</Button>
+      <Button variant={confirmVariant} onClick={onConfirm}>
+        {confirmText}
+      </Button>
+    </ConfirmButtons>
+  );
 
   return (
-    <ConfirmOverlay onClick={onCancel}>
-      <ConfirmContent onClick={(e) => e.stopPropagation()}>
-        <ConfirmTitle>{title}</ConfirmTitle>
-        <ConfirmMessage>{message}</ConfirmMessage>
-        <ConfirmButtons>
-          <Button onClick={onCancel} style={{ flex: 1 }}>
-            {cancelText}
-          </Button>
-          <Button
-            variant={confirmVariant}
-            onClick={onConfirm}
-            style={{ flex: 1 }}
-          >
-            {confirmText}
-          </Button>
-        </ConfirmButtons>
-      </ConfirmContent>
-    </ConfirmOverlay>
+    <Modal isOpen={isOpen} onClose={onCancel} title={title} footer={footer}>
+      <ConfirmMessage>{message}</ConfirmMessage>
+    </Modal>
   );
 };

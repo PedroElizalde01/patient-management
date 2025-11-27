@@ -50,7 +50,9 @@ export const usePatientForm = ({
           },
   });
 
+  // eslint-disable-next-line react-hooks/incompatible-library
   const avatarValue = watch('avatar');
+
   const nameValue = watch('name');
   const debouncedAvatarValue = useDebounce(avatarValue, 500);
 

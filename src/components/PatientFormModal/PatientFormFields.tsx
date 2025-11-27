@@ -1,5 +1,5 @@
 import React from 'react';
-import { UseFormRegister, FieldErrors } from 'react-hook-form';
+import type { UseFormRegister, FieldErrors } from 'react-hook-form';
 import { Avatar } from '../Avatar/Avatar';
 import type { Patient } from '../../types';
 import type { PatientFormData } from '../../schemas/patientSchema';
@@ -54,12 +54,7 @@ export const PatientFormFields: React.FC<PatientFormFieldsProps> = ({
 
       <FormGroup>
         <Label>Avatar *</Label>
-        <Input
-          type="text"
-          {...register('avatar')}
-          placeholder="Enter avatar URL or text"
-          style={errors.avatar ? { borderColor: '#e74c3c' } : {}}
-        />
+
         {errors.avatar && (
           <span style={{ color: '#e74c3c', fontSize: '12px' }}>
             {errors.avatar.message}
@@ -67,10 +62,16 @@ export const PatientFormFields: React.FC<PatientFormFieldsProps> = ({
         )}
         <AvatarPreview>
           <Avatar
+            style={{ minWidth: '100px', minHeight: '100px' }}
             src={debouncedAvatarValue}
             name={isEditMode && patient ? patient.name : nameValue || 'NA'}
           />
-          <span>Avatar Preview</span>
+          <Input
+            type="text"
+            {...register('avatar')}
+            placeholder="Enter avatar URL or text"
+            style={errors.avatar ? { borderColor: '#e74c3c' } : {}}
+          />
         </AvatarPreview>
       </FormGroup>
 
