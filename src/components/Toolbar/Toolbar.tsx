@@ -1,3 +1,4 @@
+import { MdAdd } from 'react-icons/md';
 import { Searchbar, Dropdown, Button } from '..';
 import { SORT_OPTIONS, type SortOption } from '../../constants/sortOptions';
 import './Toolbar.styles.css';
@@ -37,12 +38,12 @@ export const Toolbar = ({
           placeholder="Sort by..."
         />
         <Button
-          style={{ marginRight: '12px' }}
+          style={{ marginRight: '12px', gap: '8px' }}
           variant="primary"
           onClick={onAddPatient}
           className="add-patient-btn"
         >
-          <span className="btn-icon">+</span>
+          <MdAdd size={20} />
           <span className="btn-text">Add Patient</span>
         </Button>
       </div>

@@ -1,73 +1,109 @@
-# React + TypeScript + Vite
+# Patient Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React-based web app for managing patient records. Fetches initial data from a mock API and handles all CRUD operations locally in state.
 
-Currently, two official plugins are available:
+## Description
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project displays a list of patients in a card-based interface. Each card can be expanded to show additional details. Users can add, edit, and delete patients through modals with form validation. All changes are local, nothing gets persisted to a backend.
 
-## React Compiler
+Key workflows:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- View patient grird with search and sort capabilities
+- Expand/collapse patient cards to see more details
+- Add new patients via a modal form
+- Edit existing patient info
+- Delete patients after confirmation
+- Form validation using React Hook Form + Zod
 
-## Expanding the ESLint configuration
+## Technologies Used
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **React 19** + **TypeScript**
+- **Vite** - build tool and dev server
+- **React Hook Form** - form state management
+- **Zod** - schema validation
+- **Styled Components** - component styling
+- **Framer Motion** - animations and transitions
+- **React Toastify** - toast notifications
+- **React Icons** - icon library
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Features
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Patient List
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- Fetches initial patient data from a mock API (`/users` endpoint)
+- Displays patients in a responsive card grid
+- Each card shows avatar, name, and truncated description
+- Click to expand/collapse card for full details (website link, creation date)
+
+### Search & Filter
+
+- Real-time search by patient name (debounced for performance)
+- Sort options: Name (A-Z, Z-A), Created date (Oldest, Newest)
+- Empty state when no search results match
+
+### Add Patient
+
+- Opens a modal with a form
+- Fields: Name (required), Avatar URL (optional), Website (optional, must be valid URL), Description (required)
+- Generates unique ID and timestamp on creation
+- Local state update only
+
+### Edit Patient
+
+- Click edit on any patient card
+- Pre-fills form with existing data
+- Updates patient in local state on save
+
+### Delete Patient
+
+- Removes patient from local state
+
+### Form Validation
+
+- **Name**: Required
+- **Avatar**: Optional URL for profile image
+- **Website**: Optional, but must be a valid URL if provided
+- **Description**: Required
+
+### UI/UX
+
+- Avatar fallback: shows user initials if image fails to load or no URL provided
+- Toast notifications for all actions (add, edit, delete)
+- Smooth animations when cards appear/disappear (Framer Motion)
+- Responsive design
+
+## How to Run Locally
+
+1. Clone the repository
+2. Install dependencies:
+
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+3. Start the dev server:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
+
+4. Open your browser to `http://localhost:5173` (or the port shown in terminal)
+
+### Additional Commands
+
+```bash
+npm run build       # Build for production
+npm run preview     # Preview production build
+npm run lint        # Run ESLint
+npm run lint:fix    # Fix auto-fixable lint errors
+npm run format      # Format code with Prettier
+npm run type-check  # Run TypeScript compiler without emitting files
+```
+
+## Notes
+
+- This project **does not persist data** to a backend server
+- All create, update, and delete operations happen **locally in React state**
+- On page refresh, the app re-fetches the original mock data and loses any local changes
+- The mock API endpoint is configured in `src/api/http.ts`
+- Form validation errors appear inline below each field as you type
