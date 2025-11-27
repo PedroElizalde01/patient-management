@@ -1,3 +1,4 @@
+import { MdEdit, MdDelete } from 'react-icons/md';
 import {
   ExpandedContent,
   InfoLabel,
@@ -6,8 +7,10 @@ import {
   InfoGrid,
   InfoSection,
   SectionTitle,
+  ButtonContainer,
 } from './PatientContent.styles';
 import type { Patient } from '../../data/mockPatients';
+import { Button } from '../Button/Button';
 
 export const PatientContent = ({ patient }: { patient: Patient }) => {
   const fullDate = new Date(patient.createdAt).toLocaleDateString('en-US', {
@@ -45,6 +48,16 @@ export const PatientContent = ({ patient }: { patient: Patient }) => {
           </InfoItem>
         </InfoGrid>
       </InfoSection>
+      <ButtonContainer>
+        <Button style={{ flex: 1, gap: '8px' }}>
+          <MdEdit size={20} />
+          Edit
+        </Button>
+        <Button variant="delete" style={{ flex: 1, gap: '8px' }}>
+          <MdDelete size={20} />
+          Delete
+        </Button>
+      </ButtonContainer>
     </ExpandedContent>
   );
 };

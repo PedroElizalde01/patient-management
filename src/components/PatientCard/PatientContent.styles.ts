@@ -62,3 +62,7 @@ export const InfoValue = styled.p`
   color: #061e14;
   word-break: break-word;
 `;
+export const ButtonContainer = styled.div`
+  display: flex;
+  gap: 12px;
+`;

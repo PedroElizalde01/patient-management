@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 interface StyledButtonProps {
-  $variant: 'primary' | 'secondary';
+  $variant: 'primary' | 'secondary' | 'delete';
   $fullWidth?: boolean;
 }
 
@@ -48,33 +48,51 @@ export const StyledButton = styled.button<StyledButtonProps>`
       }
     `}
 
-  ${({ $variant }) =>
-    $variant === 'secondary' &&
-    css`
-      background-color: transparent;
-      color: #6937c3; /* --secondary */
-      border-color: #6937c3; /* --secondary */
+  /* Common style for outlined buttons with theme colors (secondary, delete) */
+  ${({ $variant }) => {
+    let main, accent, focus, hoverBoxShadow, activeBoxShadow;
+    if ($variant === 'secondary') {
+      main = '#6937c3';
+      accent = '#6f2476';
+      focus = 'rgba(105, 55, 195, 0.4)';
+      hoverBoxShadow = '0 4px 8px rgba(6, 30, 20, 0.3)';
+      activeBoxShadow = '0 2px 4px rgba(6, 30, 20, 0.4)';
+    } else if ($variant === 'delete') {
+      main = 'rgb(195, 55, 55)';
+      accent = 'rgb(118, 36, 36)';
+      focus = 'rgba(195, 55, 55, 0.4)';
+      hoverBoxShadow = '0 4px 8px rgba(30, 6, 6, 0.3)';
+      activeBoxShadow = '0 2px 4px rgba(30, 7, 6, 0.4)';
+    }
 
-      &:hover:not(:disabled) {
-        background-color: #6937c3; /* --secondary */
-        color: #f1f9f7; /* --background */
-        transform: translateY(-1px);
-        box-shadow: 0 4px 8px rgba(6, 30, 20, 0.3);
-      }
+    return (
+      ($variant === 'secondary' || $variant === 'delete') &&
+      css`
+        background-color: transparent;
+        color: ${main};
+        border-color: ${main};
 
-      &:active:not(:disabled) {
-        background-color: #6f2476; /* --accent */
-        border-color: #6f2476; /* --accent */
-        color: #f1f9f7; /* --background */
-        transform: translateY(0);
-        box-shadow: 0 2px 4px rgba(6, 30, 20, 0.4);
-      }
+        &:hover:not(:disabled) {
+          background-color: ${main};
+          color: #f1f9f7; /* --background */
+          transform: translateY(-1px);
+          box-shadow: ${hoverBoxShadow};
+        }
 
-      &:focus-visible {
-        box-shadow: 0 0 0 3px rgba(105, 55, 195, 0.4);
-      }
-    `}
+        &:active:not(:disabled) {
+          background-color: ${accent};
+          border-color: ${accent};
+          color: #f1f9f7; /* --background */
+          transform: translateY(0);
+          box-shadow: ${activeBoxShadow};
+        }
 
+        &:focus-visible {
+          box-shadow: 0 0 0 3px ${focus};
+        }
+      `
+    );
+  }}
   /* disabled state */
   &:disabled {
     opacity: 0.6;
