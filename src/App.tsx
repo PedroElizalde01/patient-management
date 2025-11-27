@@ -6,14 +6,23 @@ import {
   Searchbar,
   Button,
   PatientFormModal,
+  Dropdown,
 } from './components';
 import { type Patient } from './types';
 import { useDebounce } from './hooks/useDebounce';
 import { usePatients } from './hooks/usePatients';
 
+type SortOption =
+  | 'name-asc'
+  | 'name-desc'
+  | 'createdAt-asc'
+  | 'createdAt-desc'
+  | '';
+
 function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [sortBy, setSortBy] = useState<SortOption>('name-asc');
   const {
     patients,
     loading,
@@ -26,16 +35,46 @@ function App() {
 
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
-  const filteredPatients = useMemo(() => {
-    if (!debouncedSearchQuery.trim()) {
-      return patients;
+  const sortOptions = [
+    { value: 'name-asc', label: 'Name (A-Z)' },
+    { value: 'name-desc', label: 'Name (Z-A)' },
+    { value: 'createdAt-asc', label: 'Oldest' },
+    { value: 'createdAt-desc', label: 'Newest' },
+  ];
+
+  const filteredAndSortedPatients = useMemo(() => {
+    let result = patients;
+
+    if (debouncedSearchQuery.trim()) {
+      const query = debouncedSearchQuery.toLowerCase();
+      result = patients.filter((patient: Patient) =>
+        patient.name.toLowerCase().includes(query)
+      );
     }
 
-    const query = debouncedSearchQuery.toLowerCase();
-    return patients.filter((patient: Patient) =>
-      patient.name.toLowerCase().includes(query)
-    );
-  }, [debouncedSearchQuery, patients]);
+    if (sortBy) {
+      result = [...result].sort((a, b) => {
+        switch (sortBy) {
+          case 'name-asc':
+            return a.name.trim().localeCompare(b.name.trim());
+          case 'name-desc':
+            return b.name.trim().localeCompare(a.name.trim());
+          case 'createdAt-asc':
+            return (
+              new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+            );
+          case 'createdAt-desc':
+            return (
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+            );
+          default:
+            return 0;
+        }
+      });
+    }
+
+    return result;
+  }, [debouncedSearchQuery, patients, sortBy]);
 
   if (loading) {
     return (
@@ -85,14 +124,21 @@ function App() {
               value={searchQuery}
               onChange={setSearchQuery}
               showResults={debouncedSearchQuery.length > 0}
-              resultsCount={filteredPatients.length}
+              resultsCount={filteredAndSortedPatients.length}
+            />
+            <Dropdown
+              options={sortOptions}
+              value={sortBy}
+              onChange={(value) => setSortBy(value as SortOption)}
+              placeholder="Sort by..."
             />
             <Button
               variant="primary"
               onClick={() => setIsAddModalOpen(true)}
-              style={{ whiteSpace: 'nowrap' }}
+              className="add-patient-btn"
             >
-              + Add Patient
+              <span className="btn-icon">+</span>
+              <span className="btn-text">Add Patient</span>
             </Button>
           </div>
         </div>
@@ -100,7 +146,7 @@ function App() {
 
       <main className="app-main">
         <PatientsGrid>
-          {filteredPatients.map((patient: Patient) => (
+          {filteredAndSortedPatients.map((patient: Patient) => (
             <PatientCard
               key={patient.id}
               patient={patient}
@@ -111,7 +157,7 @@ function App() {
           ))}
         </PatientsGrid>
 
-        {filteredPatients.length === 0 && debouncedSearchQuery && (
+        {filteredAndSortedPatients.length === 0 && debouncedSearchQuery && (
           <div className="no-results">
             <p>No patients found matching "{debouncedSearchQuery}"</p>
             <p className="no-results-subtitle">Try a different search term</p>
