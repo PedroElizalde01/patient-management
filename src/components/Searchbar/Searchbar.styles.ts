@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const SearchbarContainer = styled.div`
   width: 100%;
   max-width: 800px;
-  margin: 0 auto;
+  margin-left: 12px;
 `;
 
 export const SearchInputWrapper = styled.div`
@@ -91,4 +91,3 @@ export const SearchResults = styled.div`
   color: #6c757d;
   text-align: center;
 `;
-

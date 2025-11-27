@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { MdKeyboardArrowDown } from 'react-icons/md';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   StyledPatientCard,
   CardHeader,
@@ -13,17 +15,22 @@ import type { Patient } from '../../data/mockPatients';
 import { Avatar } from '../index';
 import { formatDate } from '../../utils';
 import { PatientContent } from './PatientContent';
+import { cardExpandAnimation } from '../../utils/animations';
 
 interface PatientCardProps {
   shadow?: boolean;
   padding?: string;
   patient: Patient;
+  onDelete?: (id: string) => void;
+  onUpdate?: (id: string, updatedData: Partial<Patient>) => void;
 }
 
 export const PatientCard: React.FC<PatientCardProps> = ({
   shadow = false,
   padding = '16px',
   patient,
+  onDelete,
+  onUpdate,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -44,22 +51,26 @@ export const PatientCard: React.FC<PatientCardProps> = ({
           </PatientInfo>
         </HeaderContent>
         <ExpandButton $isExpanded={isExpanded}>
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <polyline points="6 9 12 15 18 9" />
-          </svg>
+          <MdKeyboardArrowDown size={24} />
         </ExpandButton>
       </CardHeader>
 
-      {isExpanded && <PatientContent patient={patient} />}
+      <AnimatePresence initial={false}>
+        {isExpanded && (
+          <motion.div
+            initial={cardExpandAnimation.initial}
+            animate={cardExpandAnimation.animate}
+            exit={cardExpandAnimation.exit}
+            style={cardExpandAnimation.style}
+          >
+            <PatientContent
+              patient={patient}
+              onDelete={onDelete}
+              onUpdate={onUpdate}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </StyledPatientCard>
   );
 };

@@ -62,3 +62,17 @@ export const InfoValue = styled.p`
   color: #061e14;
   word-break: break-word;
 `;
+
+export const DescriptionValue = styled(InfoValue)`
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.5;
+`;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  gap: 12px;
+`;
