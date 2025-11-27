@@ -20,31 +20,31 @@ export const StyledButton = styled.button<StyledButtonProps>`
   font-family: inherit;
   outline: none;
   text-decoration: none;
-  
+
   /* variants */
   ${({ $variant }) =>
     $variant === 'primary' &&
     css`
-      background-color: #007bff;
-      color: #f1f9f7;
-      border-color: #007bff;
+      background-color: #2dd397; /* --primary */
+      color: #f1f9f7; /* --background */
+      border-color: #2dd397; /* --primary */
 
       &:hover:not(:disabled) {
-        background-color: #0056b3;
-        border-color: #0056b3;
+        background-color: #4cc096;
+        border-color: #4cc096;
         transform: translateY(-1px);
-        box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+        box-shadow: 0 4px 8px rgba(6, 30, 20, 0.3);
       }
 
       &:active:not(:disabled) {
-        background-color: #004085;
-        border-color: #004085;
+        background-color: #29976f;
+        border-color: #29976f;
         transform: translateY(0);
-        box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
+        box-shadow: 0 2px 4px rgba(6, 30, 20, 0.4);
       }
 
       &:focus-visible {
-        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.4);
+        box-shadow: 0 0 0 3px rgba(45, 211, 151, 0.4);
       }
     `}
 
@@ -52,24 +52,26 @@ export const StyledButton = styled.button<StyledButtonProps>`
     $variant === 'secondary' &&
     css`
       background-color: transparent;
-      color: #6c757d;
-      border-color: #6c757d;
+      color: #6937c3; /* --secondary */
+      border-color: #6937c3; /* --secondary */
 
       &:hover:not(:disabled) {
-        background-color: #6c757d;
-        color: #f1f9f7;
+        background-color: #6937c3; /* --secondary */
+        color: #f1f9f7; /* --background */
         transform: translateY(-1px);
-        box-shadow: 0 4px 8px rgba(108, 117, 125, 0.3);
+        box-shadow: 0 4px 8px rgba(6, 30, 20, 0.3);
       }
+
       &:active:not(:disabled) {
-        background-color: #5a6268;
-        border-color: #5a6268;
-        color: #f1f9f7;
+        background-color: #6f2476; /* --accent */
+        border-color: #6f2476; /* --accent */
+        color: #f1f9f7; /* --background */
         transform: translateY(0);
-        box-shadow: 0 2px 4px rgba(108, 117, 125, 0.2);
+        box-shadow: 0 2px 4px rgba(6, 30, 20, 0.4);
       }
+
       &:focus-visible {
-        box-shadow: 0 0 0 3px rgba(108, 117, 125, 0.4);
+        box-shadow: 0 0 0 3px rgba(105, 55, 195, 0.4);
       }
     `}
 
@@ -80,4 +82,3 @@ export const StyledButton = styled.button<StyledButtonProps>`
     transform: none;
   }
 `;
-
