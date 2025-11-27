@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { MdClose } from 'react-icons/md';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   ModalOverlay,
   ModalContent,
@@ -9,6 +10,10 @@ import {
   ModalBody,
   ModalFooter,
 } from './Modal.styles';
+import {
+  modalOverlayVariants,
+  modalContentVariants,
+} from '../../utils/animations';
 
 interface ModalProps {
   isOpen: boolean;
@@ -45,8 +50,6 @@ export const Modal: React.FC<ModalProps> = ({
     };
   }, [isOpen, onClose]);
 
-  if (!isOpen) return null;
-
   const handleOverlayClick = () => {
     if (closeOnOverlayClick) {
       onClose();
@@ -54,17 +57,37 @@ export const Modal: React.FC<ModalProps> = ({
   };
 
   return (
-    <ModalOverlay onClick={handleOverlayClick} role="dialog" aria-modal="true">
-      <ModalContent onClick={(e) => e.stopPropagation()}>
-        <ModalHeader>
-          <ModalTitle>{title}</ModalTitle>
-          <CloseButton onClick={onClose} aria-label="Close modal">
-            <MdClose size={24} />
-          </CloseButton>
-        </ModalHeader>
-        <ModalBody>{children}</ModalBody>
-        {footer && <ModalFooter>{footer}</ModalFooter>}
-      </ModalContent>
-    </ModalOverlay>
+    <AnimatePresence>
+      {isOpen && (
+        <ModalOverlay
+          as={motion.div}
+          variants={modalOverlayVariants}
+          initial="hidden"
+          animate="visible"
+          exit="hidden"
+          onClick={handleOverlayClick}
+          role="dialog"
+          aria-modal="true"
+        >
+          <ModalContent
+            as={motion.div}
+            variants={modalContentVariants}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <ModalHeader>
+              <ModalTitle>{title}</ModalTitle>
+              <CloseButton onClick={onClose} aria-label="Close modal">
+                <MdClose size={24} />
+              </CloseButton>
+            </ModalHeader>
+            <ModalBody>{children}</ModalBody>
+            {footer && <ModalFooter>{footer}</ModalFooter>}
+          </ModalContent>
+        </ModalOverlay>
+      )}
+    </AnimatePresence>
   );
 };

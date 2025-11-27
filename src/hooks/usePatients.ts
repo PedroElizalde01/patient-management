@@ -25,9 +25,12 @@ export function usePatients(): UsePatientsReturn {
       const data = await getPatients();
       setPatients(data);
     } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : 'Failed to fetch patients';
       setError(
         err instanceof Error ? err : new Error('Failed to fetch patients')
       );
+      toast.error(`Error loading patients: ${errorMessage}`);
     } finally {
       setLoading(false);
     }
@@ -44,7 +47,7 @@ export function usePatients(): UsePatientsReturn {
       createdAt: new Date().toISOString(),
     };
     setPatients((prevPatients) => [newPatient, ...prevPatients]);
-    toast.success(`Patient "${patientData.name}" added successfully!`);
+    toast.success(`Patient "${patientData.name}" has been added successfully!`);
   };
 
   const updatePatient = (id: string, updatedData: Partial<Patient>) => {
@@ -57,7 +60,7 @@ export function usePatients(): UsePatientsReturn {
       )
     );
 
-    toast.success(`Patient "${patientName}" updated successfully!`);
+    toast.success(`Patient "${patientName}" has been updated successfully!`);
   };
 
   const deletePatient = (id: string) => {
@@ -68,7 +71,7 @@ export function usePatients(): UsePatientsReturn {
     );
 
     if (patientToDelete) {
-      toast.error(`Patient "${patientToDelete.name}" deleted successfully!`);
+      toast.info(`Patient "${patientToDelete.name}" has been deleted`);
     }
   };
 

@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import './App.css';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   PatientCard,
   PatientsGrid,
@@ -18,6 +19,7 @@ import { useDebounce } from './hooks/useDebounce';
 import { usePatients } from './hooks/usePatients';
 import { usePatientFilters } from './hooks/usePatientFilters';
 import { type SortOption } from './constants/sortOptions';
+import { patientCardAnimation } from './utils/animations';
 
 function App() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -97,15 +99,24 @@ function App() {
         </div>
       ) : (
         <PatientsGrid>
-          {filteredAndSortedPatients.map((patient: Patient) => (
-            <PatientCard
-              key={patient.id}
-              patient={patient}
-              shadow
-              onDelete={deletePatient}
-              onUpdate={updatePatient}
-            />
-          ))}
+          <AnimatePresence mode="popLayout">
+            {filteredAndSortedPatients.map((patient: Patient) => (
+              <motion.div
+                key={patient.id}
+                layout
+                initial={patientCardAnimation.initial}
+                animate={patientCardAnimation.animate}
+                exit={patientCardAnimation.exit}
+              >
+                <PatientCard
+                  patient={patient}
+                  shadow
+                  onDelete={deletePatient}
+                  onUpdate={updatePatient}
+                />
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </PatientsGrid>
       )}
 
@@ -122,13 +133,16 @@ function App() {
         position="top-right"
         autoClose={3000}
         hideProgressBar={false}
-        newestOnTop={false}
+        newestOnTop={true}
         closeOnClick
         rtl={false}
         pauseOnFocusLoss
         draggable
         pauseOnHover
         theme="light"
+        transition={Slide}
+        limit={3}
+        style={{ zIndex: 9999 }}
       />
     </AppLayout>
   );

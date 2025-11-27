@@ -1,24 +1,4 @@
-import styled, { keyframes } from 'styled-components';
-
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
-
-const slideIn = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
+import styled from 'styled-components';
 
 export const ModalOverlay = styled.div`
   position: fixed;
@@ -34,7 +14,6 @@ export const ModalOverlay = styled.div`
   justify-content: center;
   z-index: 1000;
   padding: 20px;
-  animation: ${fadeIn} 0.2s ease-out;
 `;
 
 export const ModalContent = styled.div`
@@ -47,7 +26,6 @@ export const ModalContent = styled.div`
   overflow-y: auto;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
   position: relative;
-  animation: ${slideIn} 0.3s ease-out;
 `;
 
 export const ModalHeader = styled.div`

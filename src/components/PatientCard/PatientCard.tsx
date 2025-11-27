@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { MdKeyboardArrowDown } from 'react-icons/md';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   StyledPatientCard,
   CardHeader,
@@ -14,6 +15,7 @@ import type { Patient } from '../../data/mockPatients';
 import { Avatar } from '../index';
 import { formatDate } from '../../utils';
 import { PatientContent } from './PatientContent';
+import { cardExpandAnimation } from '../../utils/animations';
 
 interface PatientCardProps {
   shadow?: boolean;
@@ -53,13 +55,22 @@ export const PatientCard: React.FC<PatientCardProps> = ({
         </ExpandButton>
       </CardHeader>
 
-      {isExpanded && (
-        <PatientContent
-          patient={patient}
-          onDelete={onDelete}
-          onUpdate={onUpdate}
-        />
-      )}
+      <AnimatePresence initial={false}>
+        {isExpanded && (
+          <motion.div
+            initial={cardExpandAnimation.initial}
+            animate={cardExpandAnimation.animate}
+            exit={cardExpandAnimation.exit}
+            style={cardExpandAnimation.style}
+          >
+            <PatientContent
+              patient={patient}
+              onDelete={onDelete}
+              onUpdate={onUpdate}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </StyledPatientCard>
   );
 };
