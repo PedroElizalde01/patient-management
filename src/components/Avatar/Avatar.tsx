@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { StyledAvatar, Initials } from './Avatar.styles';
 
 interface AvatarProps {
@@ -16,27 +16,21 @@ const getInitials = (name: string): string => {
 };
 
 export const Avatar: React.FC<AvatarProps> = ({ src, name, alt }) => {
-  const [imageError, setImageError] = useState(false);
+  const [state, setState] = useState({ imageError: false, currentSrc: src });
 
-  useEffect(() => {
-    setImageError(false);
-  }, [src]);
+  if (state.currentSrc !== src) {
+    setState({ imageError: false, currentSrc: src });
+  }
 
   const handleError = () => {
-    if (!imageError) {
-      setImageError(true);
+    if (!state.imageError) {
+      setState({ imageError: true, currentSrc: src });
     }
   };
 
-  if (!src || imageError) {
+  if (!src || state.imageError) {
     return <Initials>{getInitials(name)}</Initials>;
   }
 
-  return (
-    <StyledAvatar
-      src={src}
-      alt={alt || name}
-      onError={handleError}
-    />
-  );
+  return <StyledAvatar src={src} alt={alt || name} onError={handleError} />;
 };
