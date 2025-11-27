@@ -41,13 +41,19 @@ export const PatientFormModal: React.FC<PatientFormModalProps> = ({
 
   const footer = (
     <>
-      <Button onClick={handleClose} variant="delete" style={{ flex: 1 }}>
+      <Button
+        onClick={handleClose}
+        variant="delete"
+        style={{ flex: 1 }}
+        type="button"
+      >
         Cancel
       </Button>
       <Button
         variant="primary"
         onClick={handleSubmit(onSubmit)}
         style={{ flex: 1 }}
+        type="button"
       >
         {submitButtonText}
       </Button>
@@ -62,7 +68,7 @@ export const PatientFormModal: React.FC<PatientFormModalProps> = ({
         title={modalTitle}
         footer={footer}
       >
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form>
           <PatientFormFields
             register={register}
             errors={errors}

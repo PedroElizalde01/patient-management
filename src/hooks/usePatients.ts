@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 import { getPatients } from '../api/patientsApi';
 import type { Patient } from '../types';
 
@@ -43,20 +44,32 @@ export function usePatients(): UsePatientsReturn {
       createdAt: new Date().toISOString(),
     };
     setPatients((prevPatients) => [newPatient, ...prevPatients]);
+    toast.success(`Patient "${patientData.name}" added successfully!`);
   };
 
   const updatePatient = (id: string, updatedData: Partial<Patient>) => {
+    const patientName =
+      updatedData.name || patients.find((p) => p.id === id)?.name || 'Patient';
+
     setPatients((prevPatients) =>
       prevPatients.map((patient) =>
         patient.id === id ? { ...patient, ...updatedData } : patient
       )
     );
+
+    toast.success(`Patient "${patientName}" updated successfully!`);
   };
 
   const deletePatient = (id: string) => {
+    const patientToDelete = patients.find((p) => p.id === id);
+
     setPatients((prevPatients) =>
       prevPatients.filter((patient) => patient.id !== id)
     );
+
+    if (patientToDelete) {
+      toast.error(`Patient "${patientToDelete.name}" deleted successfully!`);
+    }
   };
 
   const refetch = async () => {

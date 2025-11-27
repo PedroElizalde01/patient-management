@@ -25,9 +25,9 @@ export const StyledButton = styled.button<StyledButtonProps>`
   ${({ $variant }) =>
     $variant === 'primary' &&
     css`
-      background-color: #2dd397; /* --primary */
-      color: #f1f9f7; /* --background */
-      border-color: #2dd397; /* --primary */
+      background-color: #2dd397;
+      color: #f1f9f7;
+      border-color: #2dd397;
 
       &:hover:not(:disabled) {
         background-color: #4cc096;
@@ -48,7 +48,6 @@ export const StyledButton = styled.button<StyledButtonProps>`
       }
     `}
 
-  /* Common style for outlined buttons with theme colors (secondary, delete) */
   ${({ $variant }) => {
     let main, accent, focus, hoverBoxShadow, activeBoxShadow;
     if ($variant === 'secondary') {
