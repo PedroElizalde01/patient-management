@@ -1,0 +1,16 @@
+.toolbar {
+  width: 100%;
+}
+
+.toolbar-container {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+}
+
+.toolbar-container > div:first-child {
+  flex: 1;
+  max-width: 500px;
+}
